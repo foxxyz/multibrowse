@@ -3,7 +3,7 @@ Multibrowse: Multi-Monitor Kiosk Mode
 
 Simple python script to open several full-screen browser windows onto multiple monitor setups.
 
-Supported platforms: Windows
+Supported platforms: Windows (Linux coming soon!)
 
 Requirements
 ------------
