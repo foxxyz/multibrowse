@@ -25,4 +25,9 @@ if __name__ == '__main__':
 
     # Start new browser instance for each URL
     for index, url in enumerate(urls):
+        # Skip blank URLs
+        if url == '-':
+            print('Skipping monitor {}'.format(index + 1))
+            continue
+        print('Opening {} on monitor {}'.format(url, index + 1))
         system.open_browser(url, index)

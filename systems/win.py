@@ -43,12 +43,6 @@ class WindowsSystem(System):
         return areas
 
     def open_browser(self, url, display_num=0):
-        print('Opening {} on monitor {}'.format(url, display_num))
-
-        # Skip blank URLs
-        if url == '-':
-            return
-
         subprocess.Popen([self.browser_path, url, '--new-window', '--incognito'])
         time.sleep(2)
 

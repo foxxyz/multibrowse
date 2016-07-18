@@ -15,6 +15,13 @@ Requirements
 Usage
 -----
 
+Open `http://ivo.la` on monitor 1 and `http://bbc.com` on monitor 2
+
 ```
 python multibrowse.py http://ivo.la http://bbc.com
 ```
+
+Open `http://ivo.la` on monitor 1 and `http://bbc.com` on monitor 3
+
+```
+python multibrowse.py http://ivo.la - http://bbc.com

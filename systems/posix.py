@@ -28,13 +28,6 @@ class PosixSystem(System):
         return connected
 
     def open_browser(self, url, display_num=0):
-        # Skip blank URLs
-        if url == '-':
-            print('Skipping monitor {}'.format(display_num))
-            return
-
-        print('Opening {} on monitor {}'.format(url, display_num))
-
         display = self.displays[display_num]
         Popen([
             self.browser_path,
