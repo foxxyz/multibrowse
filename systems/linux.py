@@ -1,7 +1,7 @@
 from functools import lru_cache
 import os
 import re
-from subprocess import run, check_output, Popen, DEVNULL
+from subprocess import call, check_output, Popen, DEVNULL
 from uuid import uuid4
 
 from . import System
@@ -22,7 +22,7 @@ class LinuxSystem(System):
         return check_output(['which', 'google-chrome-stable'])[:-1].decode('utf8')
 
     def close_existing_browsers(self):
-        return run(['killall', '-9', 'chrome'], stdout=DEVNULL, stderr=DEVNULL)
+        return call(['killall', '-9', 'chrome'], stdout=DEVNULL, stderr=DEVNULL)
 
     @property
     @lru_cache()
