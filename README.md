@@ -24,8 +24,8 @@ python multibrowse.py http://ivo.la http://bbc.com
 Open `http://ivo.la` on monitor 1 and `http://bbc.com` on monitor 3
 
 ```
-python multibrowse.py http://ivo.la - http
-://bbc.com
+python multibrowse.py http://ivo.la - http://bbc.com
+```
 
 Deployment
 ----------
