@@ -43,3 +43,8 @@ python setup.py py2exe
 ```
 
 This should generate a `dist` folder containing `multibrowse.exe`. This executable has no dependencies and can be used as-is.
+
+License
+-------
+
+MIT

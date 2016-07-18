@@ -10,7 +10,7 @@ if __name__ == '__main__':
     # Get arguments
     urls = sys.argv[1:]
     if not urls:
-        print('Usage: python run.py http://url1.com http://url2.com ...', file=sys.stderr)
+        print('Usage: {} http://url1.com http://url2.com ...'.format(sys.argv[0]), file=sys.stderr)
         sys.exit()
 
     # Find associated system to make calls on

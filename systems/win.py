@@ -1,4 +1,5 @@
 import ctypes
+from functools import lru_cache
 import os
 import subprocess
 import time
@@ -23,6 +24,7 @@ class WindowsSystem(System):
     def close_existing_browsers(self):
         return subprocess.call('taskkill /f /im chrome.exe')
 
+    @lru_cache()
     def displays(self):
         monitors = []
 
@@ -45,6 +47,14 @@ class WindowsSystem(System):
         return areas
 
     def open_browser(self, url, display_num=0):
+        # Get current display
+        try:
+            monitor = self.displays()[display_num]
+        except IndexError:
+            print('Error: No display number {}'.format(display_num + 1), file=sys.stderr)
+            return
+
+        # Open browser window
         subprocess.Popen([self.browser_path, url, '--new-window', '--incognito'])
         time.sleep(2)
 
@@ -65,8 +75,7 @@ class WindowsSystem(System):
         user.EnumWindows(winwrap(process_handler), 0)
 
         # Move browser to monitor position, 500x500 px
-        monitors = self.displays()
-        user.MoveWindow(titles[0][0], monitors[display_num][1]['left'], monitors[display_num][1]['top'], 500, 500, True)
+        user.MoveWindow(titles[0][0], monitor[1]['left'], monitor[1]['top'], 500, 500, True)
         user.SetForegroundWindow(titles[0][0])
 
         # Send a fullscreen keypress event
@@ -79,7 +88,7 @@ class WindowsSystem(System):
         user.SendInput(n_inputs, p_inputs, cb_size)
 
 
-# Windows Ctypes
+# Windows Ctypes for interacting with the Windows API
 
 class RECT(ctypes.Structure):
     _fields_ = (

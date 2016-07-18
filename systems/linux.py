@@ -2,6 +2,7 @@ from functools import lru_cache
 import os
 import re
 from subprocess import call, check_output, Popen, DEVNULL
+import sys
 from uuid import uuid4
 
 from . import System
@@ -35,7 +36,11 @@ class LinuxSystem(System):
         return connected
 
     def open_browser(self, url, display_num=0):
-        display = self.displays[display_num]
+        try:
+            display = self.displays[display_num]
+        except IndexError:
+            print('Error: No display number {}'.format(display_num + 1), file=sys.stderr)
+            return
         Popen([
             self.browser_path,
             url,
