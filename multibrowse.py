@@ -15,7 +15,7 @@ if __name__ == '__main__':
 
     # Find associated system to make calls on
     try:
-        system = next(system for system in System.__subclasses__() if system.OS_NAME == os.name)()
+        system = next(system for system in System.__subclasses__() if system.is_current())()
     except StopIteration:
         print('Sorry, multibrowse is not supported for your platform ({}).'.format(os.name), file=sys.stderr)
         sys.exit()

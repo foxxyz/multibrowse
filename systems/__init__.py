@@ -1,18 +1,26 @@
 from abc import ABCMeta, abstractmethod
 
-__all__ = ['System', 'posix', 'win']
+__all__ = ['System', 'linux', 'win']
 
 
 # Abstract system class to implement OS-specific methods
 class System(metaclass=ABCMeta):
 
+    @classmethod
+    @abstractmethod
+    def is_current(self):
+        "Return True if this is the current system"
+        pass
+
     @property
     @abstractmethod
     def browser_path(self):
+        "Return the path to the Chrome executable"
         pass
 
     @abstractmethod
     def close_existing_browsers(self):
+        "Close all existing instances of Chrome"
         pass
 
     @abstractmethod
@@ -22,4 +30,5 @@ class System(metaclass=ABCMeta):
 
     @abstractmethod
     def open_browser(self, url, display_num=0):
+        "Open an instance of Chrome with url on display number display_num"
         pass

@@ -12,7 +12,10 @@ from . import System
 
 
 class WindowsSystem(System):
-    OS_NAME = 'nt'
+
+    @classmethod
+    def is_current(self):
+        return os.name == 'nt'
 
     @property
     def browser_path(self):

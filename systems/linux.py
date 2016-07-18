@@ -1,4 +1,5 @@
 from functools import lru_cache
+import os
 import re
 from subprocess import run, check_output, Popen, DEVNULL
 from uuid import uuid4
@@ -6,8 +7,14 @@ from uuid import uuid4
 from . import System
 
 
-class PosixSystem(System):
-    OS_NAME = 'posix'
+class LinuxSystem(System):
+
+    @classmethod
+    def is_current(self):
+        try:
+            return os.uname().sysname == 'Linux'
+        except AttributeError:
+            return False
 
     @property
     @lru_cache()
