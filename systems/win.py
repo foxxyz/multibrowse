@@ -2,6 +2,7 @@ import ctypes
 from functools import lru_cache
 import os
 import subprocess
+import sys
 import time
 try:
     user = ctypes.windll.user32
