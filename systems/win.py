@@ -59,6 +59,7 @@ class WindowsSystem(System):
         subprocess.Popen([
             self.browser_path,
             url,
+            '--disable-infobars',
             '--new-window',
             '--no-first-run',
             '--disable-session-crashed-bubble',
@@ -95,8 +96,8 @@ class WindowsSystem(System):
             cb_size = ctypes.c_int(ctypes.sizeof(INPUT))
             user.SendInput(n_inputs, p_inputs, cb_size)
 
-# Windows Ctypes for interacting with the Windows API
 
+# Windows Ctypes for interacting with the Windows API
 class RECT(ctypes.Structure):
     _fields_ = (
         ('left', ctypes.c_ulong),

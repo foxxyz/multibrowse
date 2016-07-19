@@ -11,6 +11,9 @@ Requirements
 ------------
 
  * Python 3
+ * xdotool (Linux Only)
+  * Install with Apt: `sudo apt-get install xdotool`
+  * Install with Pacman: `sudo pacman -S xdotool`
 
 Usage
 -----

@@ -4,7 +4,7 @@ import sys
 
 from systems import *
 
-__version__ = '1.1.0'
+__version__ = '1.2.0'
 
 
 # Startup procedure
