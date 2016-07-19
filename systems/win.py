@@ -56,8 +56,15 @@ class WindowsSystem(System):
             return
 
         # Open browser window
-        subprocess.Popen([self.browser_path, url, '--new-window', '--incognito'])
-        time.sleep(2)
+        subprocess.Popen([
+            self.browser_path,
+            url,
+            '--new-window',
+            '--no-first-run',
+            '--disable-session-crashed-bubble',
+            '--window-position={},{}'.format(monitor[1]['left'], monitor[1]['top'])
+        ])
+        time.sleep(3)
 
         # Find browser process handle
         titles = []
@@ -79,15 +86,14 @@ class WindowsSystem(System):
         user.MoveWindow(titles[0][0], monitor[1]['left'], monitor[1]['top'], 500, 500, True)
         user.SetForegroundWindow(titles[0][0])
 
-        # Send a fullscreen keypress event
-        key = 0x7A  # F11
-        key = INPUT(1, INPUTunion(ki=KEYBDINPUT(key, key, 0, 0, None)))
-        n_inputs = 1
-        LPINPUT = INPUT * n_inputs
-        p_inputs = LPINPUT(key)
-        cb_size = ctypes.c_int(ctypes.sizeof(INPUT))
-        user.SendInput(n_inputs, p_inputs, cb_size)
-
+        # Send a fullscreen keypress event followed by a refresh
+        for key in [0x7A, 0x74]:  # F11 & F5
+            key_input = INPUT(1, INPUTunion(ki=KEYBDINPUT(key, key, 0, 0, None)))
+            n_inputs = 1
+            LPINPUT = INPUT * n_inputs
+            p_inputs = LPINPUT(key_input)
+            cb_size = ctypes.c_int(ctypes.sizeof(INPUT))
+            user.SendInput(n_inputs, p_inputs, cb_size)
 
 # Windows Ctypes for interacting with the Windows API
 

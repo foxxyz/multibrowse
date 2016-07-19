@@ -4,8 +4,12 @@ import sys
 
 from systems import *
 
+__version__ = '1.1.0'
+
+
 # Startup procedure
 if __name__ == '__main__':
+    print('Multibrowse v{}'.format(__version__))
 
     # Get arguments
     urls = sys.argv[1:]
