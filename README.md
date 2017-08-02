@@ -5,15 +5,23 @@ Simple python script to open several full-screen browser windows onto multiple m
 
 Browser is currently set to Google Chrome, but can be adapted to use any browser.
 
-Supported platforms: Windows/Linux (OSX coming soon!)
+Supported platforms: Windows/Linux/MacOS
 
 Requirements
 ------------
 
  * Python 3
- * xdotool (Linux Only)
+
+### Linux
+
+ * xdotool
   * Install with Apt: `sudo apt-get install xdotool`
   * Install with Pacman: `sudo pacman -S xdotool`
+
+### MacOS
+
+ * PyObjC
+  * Install with pip: `pip3 install -U pyobjc`
 
 Usage
 -----

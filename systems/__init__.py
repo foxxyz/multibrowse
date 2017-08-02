@@ -1,6 +1,6 @@
 from abc import ABCMeta, abstractmethod
 
-__all__ = ['System', 'linux', 'win']
+__all__ = ['System', 'linux', 'win', 'mac']
 
 
 # Abstract system class to implement OS-specific methods
@@ -16,6 +16,10 @@ class System(metaclass=ABCMeta):
     @abstractmethod
     def browser_path(self):
         "Return the path to the Chrome executable"
+        pass
+
+    def clean_up(self):
+        "Perform any remaining clean up tasks"
         pass
 
     @abstractmethod
