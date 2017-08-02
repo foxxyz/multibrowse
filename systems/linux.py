@@ -4,7 +4,6 @@ import re
 from subprocess import call, check_output, Popen, DEVNULL
 import sys
 from time import sleep
-from uuid import uuid4
 
 from . import System
 
@@ -53,11 +52,10 @@ class LinuxSystem(System):
             url,
             '--new-window',
             '--disable-infobars',
-            '--disable-session-crashed-bubble',
             '--window-position={},{}'.format(display['offset_x'], display['offset_y']),
             '--no-first-run',  # Skip dialog boxes asking for default browser and sending usage statistics to google
         ]
-        proc = Popen(args, stdout=DEVNULL, stderr=DEVNULL)
+        Popen(args, stdout=DEVNULL, stderr=DEVNULL)
         sleep(1)
 
         # Find browser process handle

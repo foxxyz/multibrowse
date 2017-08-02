@@ -4,7 +4,7 @@ import sys
 
 from systems import *
 
-__version__ = '1.2.0'
+__version__ = '1.3.0'
 
 
 # Startup procedure
@@ -35,3 +35,6 @@ if __name__ == '__main__':
             continue
         print('Opening {} on monitor {}'.format(url, index + 1))
         system.open_browser(url, index)
+
+    # Finish up any tasks
+    system.clean_up()

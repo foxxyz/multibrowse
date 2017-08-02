@@ -62,7 +62,6 @@ class WindowsSystem(System):
             '--disable-infobars',
             '--new-window',
             '--no-first-run',
-            '--disable-session-crashed-bubble',
             '--window-position={},{}'.format(monitor[1]['left'], monitor[1]['top'])
         ])
         time.sleep(3)
