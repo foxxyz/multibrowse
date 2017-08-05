@@ -1,16 +1,8 @@
 from abc import ABCMeta, abstractmethod
 
-__all__ = ['System', 'linux', 'win', 'mac']
-
 
 # Abstract system class to implement OS-specific methods
-class System(metaclass=ABCMeta):
-
-    @classmethod
-    @abstractmethod
-    def is_current(self):
-        "Return True if this is the current system"
-        pass
+class BaseSystem(metaclass=ABCMeta):
 
     @property
     @abstractmethod

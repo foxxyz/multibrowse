@@ -2,10 +2,17 @@
 import os
 import sys
 
-from systems import *
-
 __version__ = '1.3.0'
 
+# Conditionally import correct system
+if sys.platform.startswith('linux'):
+    from systems.linux import System
+elif sys.platform.startswith('darwin'):
+    from systems.mac import System
+elif sys.platform.startswith('win32'):
+    from systems.win import System
+else:
+    raise SystemExit('Sorry, multibrowse is not supported for your platform ({}).'.format(sys.platform))
 
 # Startup procedure
 if __name__ == '__main__':
@@ -17,12 +24,8 @@ if __name__ == '__main__':
         print('Usage: {} http://url1.com http://url2.com ...'.format(sys.argv[0]), file=sys.stderr)
         sys.exit()
 
-    # Find associated system to make calls on
-    try:
-        system = next(system for system in System.__subclasses__() if system.is_current())()
-    except StopIteration:
-        print('Sorry, multibrowse is not supported for your platform ({}).'.format(os.name), file=sys.stderr)
-        sys.exit()
+    # Init associated system
+    system = System()
 
     # Close existing windows
     system.close_existing_browsers()

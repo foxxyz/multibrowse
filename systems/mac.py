@@ -8,22 +8,15 @@ from time import sleep
 try:
     from AppKit import NSScreen
 except ImportError:
-    pass
+    raise ImportError("PyObjC does not seem to be installed. Install it with `pip3 install -U pyobjc`")
 
-from . import System
+from . import BaseSystem
 
 
-class MacOSSystem(System):
+class System(BaseSystem):
 
     def __init__(self):
         self.tasks = []
-
-    @classmethod
-    def is_current(self):
-        try:
-            return os.uname().sysname == 'Darwin'
-        except AttributeError:
-            return False
 
     def apple_script(self, script):
         "Perform apple script via call()"
@@ -48,10 +41,7 @@ class MacOSSystem(System):
     @property
     @lru_cache()
     def displays(self):
-        try:
-            screens = NSScreen.screens()
-        except NameError:
-            raise NameError("PyObjC does not seem to be installed. Install it with `pip3 install -U pyobjc`")
+        screens = NSScreen.screens()
         connected = []
         for screen in screens:
             screen = screen.frame()

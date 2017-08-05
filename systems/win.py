@@ -4,19 +4,12 @@ import os
 import subprocess
 import sys
 import time
-try:
-    user = ctypes.windll.user32
-except AttributeError:
-    user = None
 
-from . import System
+from . import BaseSystem
 
+user = ctypes.windll.user32
 
-class WindowsSystem(System):
-
-    @classmethod
-    def is_current(self):
-        return os.name == 'nt'
+class System(BaseSystem):
 
     @property
     def browser_path(self):
@@ -64,7 +57,7 @@ class WindowsSystem(System):
             '--no-first-run',
             '--window-position={},{}'.format(monitor[1]['left'], monitor[1]['top'])
         ])
-        time.sleep(3)
+        time.sleep(5)
 
         # Find browser process handle
         titles = []

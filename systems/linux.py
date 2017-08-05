@@ -5,20 +5,13 @@ from subprocess import call, check_output, Popen, DEVNULL
 import sys
 from time import sleep
 
-from . import System
+from . import BaseSystem
 
 
-class LinuxSystem(System):
+class System(BaseSystem):
 
     def __init__(self):
         self.open_windows = set()
-
-    @classmethod
-    def is_current(self):
-        try:
-            return os.uname().sysname == 'Linux'
-        except AttributeError:
-            return False
 
     @property
     @lru_cache()
