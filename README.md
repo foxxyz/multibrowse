@@ -7,8 +7,28 @@ Browser is currently set to Google Chrome, but can be adapted to use any browser
 
 Supported platforms: Windows/Linux/MacOS
 
-Requirements
+Usage
+-----
+
+Open `http://ivo.la` on monitor 1 and `http://bbc.com` on monitor 2
+
+```
+multibrowse http://ivo.la http://bbc.com
+```
+
+Open `http://ivo.la` on monitor 1 and `http://bbc.com` on monitor 3
+
+```
+multibrowse http://ivo.la - http://bbc.com
+```
+
+Installation
 ------------
+
+Binaries can be found on the [releases page](https://github.com/foxxyz/multibrowse/releases). To build yourself, see below.
+
+Development Requirements
+------------------------
 
  * Python 3
 
@@ -21,39 +41,19 @@ Requirements
 ### MacOS
 
  * PyObjC
-  * Install with pip: `pip3 install -U pyobjc`
+  * Install with pip: `pip install pyobjc`
 
-Usage
------
 
-Open `http://ivo.la` on monitor 1 and `http://bbc.com` on monitor 2
+Building
+--------
 
-```
-python multibrowse.py http://ivo.la http://bbc.com
-```
+Multibrowse can be built into a single contained .exe file using [pyinstaller](http://www.pyinstaller.org/). Pyinstaller can be installed using `pip install pyinstaller`. The old way using `py2exe` is no longer recommended due to Python 3 compatibility issues.
 
-Open `http://ivo.la` on monitor 1 and `http://bbc.com` on monitor 3
+The following command should produce a single self-contained exe file in `/dist`:
 
 ```
-python multibrowse.py http://ivo.la - http://bbc.com
+pyinstaller --onefile multibrowse.py
 ```
-
-Deployment
-----------
-
-Multibrowse includes a setup.py file to build a fully self-contained .exe for Windows machines. To build, install py2exe:
-
-```
-pip install py2exe
-```
-
-And run the building process:
-
-```
-python setup.py py2exe
-```
-
-This should generate a `dist` folder containing `multibrowse.exe`. This executable has no dependencies and can be used as-is.
 
 License
 -------
