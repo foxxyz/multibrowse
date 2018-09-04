@@ -5,7 +5,7 @@ Simple python script to open several full-screen browser windows onto multiple m
 
 Browser is currently set to Google Chrome, but can be adapted to use any browser.
 
-Supported platforms: Windows/Linux/MacOS
+Supported platforms: Windows(7/8/10)/Linux/MacOS
 
 Usage
 -----

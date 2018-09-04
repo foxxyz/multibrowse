@@ -9,6 +9,7 @@ from . import BaseSystem
 
 user = ctypes.windll.user32
 
+
 class System(BaseSystem):
 
     @property
@@ -75,18 +76,19 @@ class System(BaseSystem):
             return True
         user.EnumWindows(winwrap(process_handler), 0)
 
-        # Move browser to monitor position, 500x500 px
-        user.MoveWindow(titles[0][0], monitor[1]['left'], monitor[1]['top'], 500, 500, True)
+        # Move browser to monitor position, 200x200 px
+        user.MoveWindow(titles[0][0], monitor[1]['left'], monitor[1]['top'], 200, 200, True)
         user.SetForegroundWindow(titles[0][0])
 
         # Send a fullscreen keypress event followed by a refresh
         for key in [0x7A, 0x74]:  # F11 & F5
-            key_input = INPUT(1, INPUTunion(ki=KEYBDINPUT(key, key, 0, 0, None)))
-            n_inputs = 1
-            LPINPUT = INPUT * n_inputs
-            p_inputs = LPINPUT(key_input)
-            cb_size = ctypes.c_int(ctypes.sizeof(INPUT))
-            user.SendInput(n_inputs, p_inputs, cb_size)
+            for key_state in [0, 2]:  # 0x002 indicates a key release
+                key_input = INPUT(1, INPUTunion(ki=KEYBDINPUT(key, key, key_state, 0, None)))
+                n_inputs = 1
+                LPINPUT = INPUT * n_inputs
+                p_inputs = LPINPUT(key_input)
+                cb_size = ctypes.c_int(ctypes.sizeof(INPUT))
+                user.SendInput(n_inputs, p_inputs, cb_size)
 
 
 # Windows Ctypes for interacting with the Windows API

@@ -1,8 +1,8 @@
 from abc import ABCMeta, abstractmethod
 
 
-# Abstract system class to implement OS-specific methods
 class BaseSystem(metaclass=ABCMeta):
+    "Abstract system class to implement OS-specific methods"
 
     @property
     @abstractmethod
