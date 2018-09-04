@@ -2,7 +2,7 @@
 import os
 import sys
 
-__version__ = '1.4.0'
+__version__ = '1.5.0'
 
 # Conditionally import correct system
 if sys.platform.startswith('linux'):
