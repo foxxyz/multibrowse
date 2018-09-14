@@ -94,10 +94,10 @@ class System(BaseSystem):
 # Windows Ctypes for interacting with the Windows API
 class RECT(ctypes.Structure):
     _fields_ = (
-        ('left', ctypes.c_ulong),
-        ('top', ctypes.c_ulong),
-        ('right', ctypes.c_ulong),
-        ('bottom', ctypes.c_ulong),
+        ('left', ctypes.c_long),
+        ('top', ctypes.c_long),
+        ('right', ctypes.c_long),
+        ('bottom', ctypes.c_long),
     )
 
     def dump(self):
