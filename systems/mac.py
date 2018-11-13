@@ -94,6 +94,7 @@ class System(BaseSystem):
             self.browser_path,
             url,
             '--new-window',
+            '--disable-pinch',
             '--disable-infobars',
             '--window-position={},{}'.format(display['offset_x'], display['offset_y']),
             '--no-first-run',  # Skip dialog boxes asking for default browser and sending usage statistics to google

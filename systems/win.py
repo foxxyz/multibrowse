@@ -1,8 +1,10 @@
 import ctypes
 from functools import lru_cache
+from shutil import rmtree
 import os
 import subprocess
 import sys
+from tempfile import gettempdir
 import time
 
 from . import BaseSystem
@@ -49,11 +51,17 @@ class System(BaseSystem):
             print('Error: No display number {}'.format(display_num + 1), file=sys.stderr)
             return
 
+        user_dir = os.path.join(gettempdir(), str((display_num + 1) * 100))
+
+        # Remove previous user data dir folder to bust cache and prevent session restore bubble from appearing
+        rmtree(user_dir, ignore_errors=True)
+
         # Open browser window
         args = [
             self.browser_path,
             '--no-first-run',
-            '--user-data-dir=%TEMP%\\{}'.format((display_num + 1) * 100),
+            '--disable-pinch',
+            '--user-data-dir={}'.format(user_dir),
             '--window-size={},{}'.format(monitor[1]['right'] - monitor[1]['left'], monitor[1]['bottom'] - monitor[1]['top']),
             '--window-position={},{}'.format(monitor[1]['left'], monitor[1]['top']),
             '--kiosk',
@@ -61,36 +69,6 @@ class System(BaseSystem):
         ]
         subprocess.Popen(args)
         time.sleep(.1)
-
-        # Find browser process handle
-        # titles = []
-        # winwrap = ctypes.WINFUNCTYPE(ctypes.c_bool, ctypes.POINTER(ctypes.c_int), ctypes.POINTER(ctypes.c_int))
-
-        # def process_handler(handle, _):
-        #     if user.IsWindowVisible(handle):
-        #         length = user.GetWindowTextLengthW(handle)
-        #         buff = ctypes.create_unicode_buffer(length + 1)
-        #         user.GetWindowTextW(handle, buff, length + 1)
-        #         if 'Chrome' in buff.value:
-        #             process_id = ctypes.c_int()
-        #             user.GetWindowThreadProcessId(handle, ctypes.byref(process_id))
-        #             titles.append((handle, buff.value))
-        #     return True
-        # user.EnumWindows(winwrap(process_handler), 0)
-
-        # # Move browser to monitor position, 200x200 px
-        # user.MoveWindow(titles[0][0], monitor[1]['left'], monitor[1]['top'], 200, 200, True)
-        # user.SetForegroundWindow(titles[0][0])
-
-        # # Send a fullscreen keypress event followed by a refresh
-        # for key in [0x7A, 0x74]:  # F11 & F5
-        #     for key_state in [0, 2]:  # 0x002 indicates a key release
-        #         key_input = INPUT(1, INPUTunion(ki=KEYBDINPUT(key, key, key_state, 0, None)))
-        #         n_inputs = 1
-        #         LPINPUT = INPUT * n_inputs
-        #         p_inputs = LPINPUT(key_input)
-        #         cb_size = ctypes.c_int(ctypes.sizeof(INPUT))
-        #         user.SendInput(n_inputs, p_inputs, cb_size)
 
 
 # Windows Ctypes for interacting with the Windows API
