@@ -8,7 +8,7 @@ from time import sleep
 try:
     from AppKit import NSScreen
 except ImportError:
-    raise ImportError("PyObjC does not seem to be installed. Install it with `pip3 install -U pyobjc`")
+    raise ImportError("PyObjC does not seem to be installed. Install it with `pip install -U pyobjc`")
 
 from . import BaseSystem
 
@@ -92,7 +92,7 @@ class System(BaseSystem):
         # Open browser window
         args = [
             self.browser_path,
-            url,
+            '--app={}'.format(url),
             '--new-window',
             '--disable-pinch',
             '--disable-infobars',

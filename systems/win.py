@@ -65,7 +65,7 @@ class System(BaseSystem):
             '--window-size={},{}'.format(monitor[1]['right'] - monitor[1]['left'], monitor[1]['bottom'] - monitor[1]['top']),
             '--window-position={},{}'.format(monitor[1]['left'], monitor[1]['top']),
             '--kiosk',
-            url,
+            '--app={}'.format(url),
         ]
         subprocess.Popen(args)
         time.sleep(.1)

@@ -42,7 +42,7 @@ class System(BaseSystem):
         # Open browser window
         args = [
             self.browser_path,
-            url,
+            '--app={}'.format(url),
             '--new-window',
             '--disable-pinch',
             '--disable-infobars',
