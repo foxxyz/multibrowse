@@ -29,7 +29,7 @@ if __name__ == '__main__':
     system = System()
 
     # Close existing windows
-    # system.close_existing_browsers()
+    system.close_existing_browsers()
 
     # Get existing displays
     displays = system.displays
