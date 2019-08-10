@@ -40,35 +40,8 @@ class System(BaseSystem):
             mi.rcMonitor = RECT()
             mi.rcWork = RECT()
             user.GetMonitorInfoA(handle, ctypes.byref(mi))
-            areas.append([handle, mi.rcMonitor.dump(), mi.rcWork.dump()])
+            areas.append(mi.rcMonitor.dump())
         return areas
-
-    def open_browser(self, url, display_num=0):
-        # Get current display
-        try:
-            monitor = self.displays()[display_num]
-        except IndexError:
-            print('Error: No display number {}'.format(display_num + 1), file=sys.stderr)
-            return
-
-        user_dir = os.path.join(gettempdir(), str((display_num + 1) * 100))
-
-        # Remove previous user data dir folder to bust cache and prevent session restore bubble from appearing
-        rmtree(user_dir, ignore_errors=True)
-
-        # Open browser window
-        args = [
-            self.browser_path,
-            '--no-first-run',
-            '--disable-pinch',
-            '--user-data-dir={}'.format(user_dir),
-            '--window-size={},{}'.format(monitor[1]['right'] - monitor[1]['left'], monitor[1]['bottom'] - monitor[1]['top']),
-            '--window-position={},{}'.format(monitor[1]['left'], monitor[1]['top']),
-            '--kiosk',
-            '--app={}'.format(url),
-        ]
-        subprocess.Popen(args)
-        time.sleep(.1)
 
 
 # Windows Ctypes for interacting with the Windows API
@@ -81,7 +54,12 @@ class RECT(ctypes.Structure):
     )
 
     def dump(self):
-        return {key: int(getattr(self, key)) for key in ('left', 'top', 'right', 'bottom')}
+        return {
+            'x': int(self.left),
+            'y': int(self.top),
+            'width': int(self.right) - int(self.left),
+            'height': int(self.bottom) - int(self.top)
+        }
 
 
 class MONITORINFO(ctypes.Structure):
