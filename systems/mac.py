@@ -1,7 +1,10 @@
 from functools import lru_cache
+from operator import itemgetter
 import os
+from shutil import rmtree
 from subprocess import call, Popen, DEVNULL
 import sys
+from tempfile import gettempdir
 from time import sleep
 
 # Only available on MacOS
@@ -15,22 +18,9 @@ from . import BaseSystem
 
 class System(BaseSystem):
 
-    def __init__(self):
-        self.tasks = []
-
-    def apple_script(self, script):
-        "Perform apple script via call()"
-        commands = [arg for statement in script.split('\n') for arg in ['-e', statement.strip()] if statement.strip()]
-        return call(['osascript'] + commands)
-
     @property
     def browser_path(self):
         return os.path.join('/', 'Applications', 'Google Chrome.app', 'Contents', 'MacOS', 'Google Chrome')
-
-    def clean_up(self):
-        "Perform clean up tasks"
-        for index, task in enumerate(self.tasks, 1):
-            task(index)
 
     def close_existing_browsers(self):
         result = call(['killall', 'Google Chrome'], stdout=DEVNULL, stderr=DEVNULL)
@@ -51,35 +41,13 @@ class System(BaseSystem):
             if len(connected) > 0:
                 origin_y = -screen.size.height - (origin_y - connected[0]["y"])
             connected.append({
-                "x": int(screen.size.width),
-                "y": int(screen.size.height),
-                "offset_x": int(screen.origin.x),
-                "offset_y": int(origin_y)
+                "width": int(screen.size.width),
+                "height": int(screen.size.height),
+                "x": int(screen.origin.x),
+                "y": int(origin_y)
             })
-        return connected
-
-    def fullscreen(self, window_num=1):
-        # Send the command for switching Chrome windows (command-`)
-        # and the command for full screen (command-ctrl-F)
-        #
-        # Before we switch windows here, we need to reindex this window to
-        # the *next* window (I.E. 2), which will be switched to when pressing
-        # command-`. We also need to add a tiny delay, which seems to remedy
-        # inconsistent window-switching behavior that occurs otherwise. Thanks Apple.
-        self.apple_script("""
-            tell application "Google Chrome"
-                activate
-                set index of window {} to {}
-                delay 0.05
-                tell application "System Events"
-                    keystroke "`" using {{command down}}
-                    keystroke "f" using {{control down, command down}}
-                end tell
-            end tell
-        """.format(window_num, 2 if len(self.tasks) > 1 else 1))
-
-        # Wait for the OSX fullscreen animation to complete
-        sleep(1)
+        # Sort displays by y, then by x for consistent ordering
+        return sorted(sorted(connected, key=itemgetter('x')), key=itemgetter('y'))
 
     def open_browser(self, url, display_num=0):
         # Get current display
@@ -89,27 +57,19 @@ class System(BaseSystem):
             print('Error: No display number {}'.format(display_num + 1), file=sys.stderr)
             return
 
-        # Open browser window
+        user_dir = os.path.join(gettempdir(), str((display_num + 1) * 100))
+
+        # Remove previous user data dir folder to bust cache and prevent session restore bubble from appearing
+        rmtree(user_dir, ignore_errors=True)
+
         args = [
             self.browser_path,
-            '--app={}'.format(url),
-            '--new-window',
+            '--no-first-run',
             '--disable-pinch',
-            '--disable-infobars',
-            '--window-position={},{}'.format(display['offset_x'], display['offset_y']),
-            '--no-first-run',  # Skip dialog boxes asking for default browser and sending usage statistics to google
+            '--user-data-dir={}'.format(user_dir),
+            '--window-size={},{}'.format(display['width'], display['height']),
+            '--window-position={},{}'.format(display['x'], display['y']),
+            '--kiosk',
+            '--app={}'.format(url),
         ]
         Popen(args, stdout=DEVNULL, stderr=DEVNULL)
-
-        # Give Chrome a second to open
-        sleep(1)
-
-        # Move the window to the other monitor
-        self.apple_script("""
-            tell application "Google Chrome"
-                set bounds of window 1 to {{{}, {}, {}, {}}}
-            end tell
-        """.format(display['offset_x'], display['offset_y'], display['offset_x'] + 500, display['offset_y'] + 500))
-
-        # Add a fullscreen task after all windows have been opened
-        self.tasks.append(self.fullscreen)
