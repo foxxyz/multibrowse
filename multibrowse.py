@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from operator import itemgetter
 import os
 import sys
 
@@ -30,14 +31,26 @@ if __name__ == '__main__':
     # Close existing windows
     system.close_existing_browsers()
 
+    # Get existing displays
+    displays = system.displays
+
+    # Sort displays by y, then by x for consistent ordering
+    displays = sorted(sorted(displays, key=itemgetter('x')), key=itemgetter('y'))
+
     # Start new browser instance for each URL
     for index, url in enumerate(urls):
         # Skip blank URLs
         if url == '-':
             print('Skipping monitor {}'.format(index + 1))
             continue
+        # Get current display
+        try:
+            display = displays[index]
+        except IndexError:
+            print('Error: No display number {}'.format(display_num + 1), file=sys.stderr)
+            continue
         print('Opening {} on monitor {}'.format(url, index + 1))
-        system.open_browser(url, index)
+        system.open_browser(url, display)
 
     # Finish up any tasks
     system.clean_up()
