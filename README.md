@@ -42,9 +42,9 @@ Development Requirements
 
 ### Linux
 
- * xdotool
-  * Install with Apt: `sudo apt-get install xdotool`
-  * Install with Pacman: `sudo pacman -S xdotool`
+ * `xrandr`
+  * Install with Apt: `apt-get install lxrandr`
+  * Install with Pacman: `pacman -S xorg-xrandr`
 
 ### MacOS
 
