@@ -24,9 +24,9 @@ multibrowse http://ivo.la - http://bbc.com
 
 To exit windows opened in fullscreen, use:
  * Mac: ⌘-Q
- * Windows: Alt-F4
+ * Windows/Linux: Alt-F4
 
-### Displays Ordering
+### Display Order
 
 Displays are ordered according to their x/y position from left to right, then top to bottom. Top-left display is always display #1.
 
@@ -55,9 +55,9 @@ Development Requirements
 Building
 --------
 
-Multibrowse can be built into a single contained .exe file using [pyinstaller](http://www.pyinstaller.org/). Pyinstaller can be installed using `pip install pyinstaller`. The old way using `py2exe` is no longer recommended due to Python 3 compatibility issues.
+Multibrowse can be built into a single contained .exe file using [pyinstaller](http://www.pyinstaller.org/). Pyinstaller can be installed using `pip install pyinstaller`.
 
-The following command should produce a single self-contained exe file in `/dist`:
+The following command produces a single self-contained exe file in `/dist`:
 
 ```
 pyinstaller --onefile multibrowse.py

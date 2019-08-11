@@ -4,10 +4,8 @@ from subprocess import call, DEVNULL
 from time import sleep
 
 # Only available on MacOS
-try:
-    from AppKit import NSScreen
-except ImportError:
-    raise ImportError("PyObjC does not seem to be installed. Install it with `pip install -U pyobjc`")
+# Install with `pip install pyobj`
+from AppKit import NSScreen
 
 from . import BaseSystem
 
