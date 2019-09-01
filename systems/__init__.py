@@ -28,7 +28,7 @@ class BaseSystem(metaclass=ABCMeta):
         "Return info about attached displays and their properties"
         pass
 
-    def open_browser(self, url, display):
+    def open_browser(self, url, display, flags=[]):
         "Open an instance of Chrome with url on display number display_num"
         # Use unique user directory for this display
         user_dir = os.path.join(gettempdir(), str(display['id'] * 100))
@@ -45,5 +45,5 @@ class BaseSystem(metaclass=ABCMeta):
             '--window-position={},{}'.format(display['x'], display['y']),
             '--kiosk',
             '--app={}'.format(url),
-        ]
+        ] + flags
         Popen(args, stdout=DEVNULL, stderr=DEVNULL)

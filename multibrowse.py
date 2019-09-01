@@ -20,7 +20,9 @@ if __name__ == '__main__':
     print('Multibrowse v{}'.format(__version__))
 
     # Get arguments
-    urls = sys.argv[1:]
+    urls, flags = [], []
+    for arg in sys.argv[1:]:
+        flags.append(arg) if arg.startswith('--') else urls.append(arg)
     if not urls:
         print('Usage: {} http://url1.com http://url2.com ...'.format(sys.argv[0]), file=sys.stderr)
         sys.exit()
@@ -47,10 +49,10 @@ if __name__ == '__main__':
         try:
             display = displays[index]
         except IndexError:
-            print('Error: No display number {}'.format(display_num + 1), file=sys.stderr)
+            print('Error: No display number {}'.format(index + 1), file=sys.stderr)
             continue
         print('Opening {} on monitor {}'.format(url, index + 1))
-        system.open_browser(url, display)
+        system.open_browser(url, display, flags)
 
     # Finish up any tasks
     system.clean_up()
