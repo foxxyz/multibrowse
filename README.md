@@ -30,6 +30,10 @@ To exit windows opened in fullscreen, use:
 
 Displays are ordered according to their x/y position from left to right, then top to bottom. Top-left display is always display #1.
 
+### Additional Options
+
+Additional CLI options passed to the `multibrowse` binary will be delegated to the browser instance. Check out the [wiki page](https://github.com/foxxyz/multibrowse/wiki) for common options.
+
 Installation
 ------------
 
