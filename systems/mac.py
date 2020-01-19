@@ -16,12 +16,6 @@ class System(BaseSystem):
     def browser_path(self):
         return os.path.join('/', 'Applications', 'Google Chrome.app', 'Contents', 'MacOS', 'Google Chrome')
 
-    def close_existing_browsers(self):
-        result = call(['killall', 'Google Chrome'], stdout=DEVNULL, stderr=DEVNULL)
-        # Give some time to shut down
-        sleep(2)
-        return result
-
     @property
     @lru_cache()
     def displays(self):

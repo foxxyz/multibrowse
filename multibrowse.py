@@ -30,9 +30,6 @@ if __name__ == '__main__':
     # Init associated system
     platform = System()
 
-    # Close existing windows
-    platform.close_existing_browsers()
-
     # Sort displays by y, then by x for consistent ordering
     displays = sorted(sorted(platform.displays, key=itemgetter('x')), key=itemgetter('y'))
 

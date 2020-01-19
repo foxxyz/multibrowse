@@ -22,9 +22,6 @@ class System(BaseSystem):
                 pass
         raise FileNotFoundError("No supported browsers found!")
 
-    def close_existing_browsers(self):
-        return call(['killall', '-9', 'chrome'], stdout=DEVNULL, stderr=DEVNULL)
-
     @property
     @lru_cache()
     def displays(self):

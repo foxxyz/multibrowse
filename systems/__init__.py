@@ -15,11 +15,6 @@ class BaseSystem(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def close_existing_browsers(self):
-        "Close all existing instances of Chrome"
-        pass
-
-    @abstractmethod
     def displays(self):
         "Return info about attached displays and their properties"
         pass

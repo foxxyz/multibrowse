@@ -18,9 +18,6 @@ class System(BaseSystem):
     def browser_path(self):
         return os.path.join('C:\\', 'Program Files (x86)', 'Google', 'Chrome', 'Application', 'chrome.exe')
 
-    def close_existing_browsers(self):
-        return call('taskkill /f /im chrome.exe', stdout=DEVNULL, stderr=DEVNULL)
-
     @property
     @lru_cache()
     def displays(self):
