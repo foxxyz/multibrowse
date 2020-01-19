@@ -25,7 +25,7 @@ class System(BaseSystem):
         for idx, line in enumerate(check_output(['xrandr']).decode('utf8').split('\n')):
             if ' connected' in line:
                 matches = re.match(r".* (?P<width>[0-9]+)x(?P<height>[0-9]+)\+(?P<x>[0-9]+)\+(?P<y>[0-9]+)", line)
-                display = matches.groupdict()
+                display = {k: int(v) for k, v in matches.groupdict().items()}
                 display['id'] = idx
                 connected.append(display)
         return connected
