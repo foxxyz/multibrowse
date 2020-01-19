@@ -7,9 +7,6 @@ from . import BaseSystem
 
 class System(BaseSystem):
 
-    def __init__(self):
-        self.open_windows = set()
-
     @property
     @lru_cache()
     def browser_path(self):

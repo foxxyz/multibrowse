@@ -14,10 +14,6 @@ class BaseSystem(metaclass=ABCMeta):
         "Return the path to the Chrome executable"
         pass
 
-    def clean_up(self):
-        "Perform any remaining clean up tasks"
-        pass
-
     @abstractmethod
     def close_existing_browsers(self):
         "Close all existing instances of Chrome"

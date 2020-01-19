@@ -28,16 +28,13 @@ if __name__ == '__main__':
         sys.exit()
 
     # Init associated system
-    system = System()
+    platform = System()
 
     # Close existing windows
-    system.close_existing_browsers()
-
-    # Get existing displays
-    displays = system.displays
+    platform.close_existing_browsers()
 
     # Sort displays by y, then by x for consistent ordering
-    displays = sorted(sorted(displays, key=itemgetter('x')), key=itemgetter('y'))
+    displays = sorted(sorted(platform.displays, key=itemgetter('x')), key=itemgetter('y'))
 
     # Start new browser instance for each URL
     for index, url in enumerate(urls):
@@ -52,7 +49,4 @@ if __name__ == '__main__':
             print('Error: No display number {}'.format(index + 1), file=sys.stderr)
             continue
         print('Opening {} on monitor {}'.format(url, index + 1))
-        system.open_browser(url, display, flags)
-
-    # Finish up any tasks
-    system.clean_up()
+        platform.open_browser(url, display, flags)
