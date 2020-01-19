@@ -49,4 +49,7 @@ if __name__ == '__main__':
             print('Error: No display number {}'.format(index + 1), file=sys.stderr)
             continue
         print('Opening {} on monitor {}'.format(url, index + 1))
-        platform.open_browser(url, display, flags)
+        try:
+            platform.open_browser(url, display, flags)
+        except FileNotFoundError as e:
+            print("Error: {}".format(e))

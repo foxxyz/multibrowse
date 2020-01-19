@@ -1,16 +1,26 @@
 from functools import lru_cache
 import re
-from subprocess import call, check_output, DEVNULL
+from subprocess import call, check_output, DEVNULL, CalledProcessError
 
 from . import BaseSystem
 
+BINARIES = [
+    'chromium-browser',     # ubuntu/debian
+    'chromium',             # arch
+    'google-chrome-stable', # arch
+]
 
 class System(BaseSystem):
 
     @property
     @lru_cache()
     def browser_path(self):
-        return check_output(['which', 'google-chrome-stable'])[:-1].decode('utf8')
+        for binary in BINARIES:
+            try:
+                return check_output(['which', binary], stderr=DEVNULL)[:-1].decode('utf8')
+            except CalledProcessError:
+                pass
+        raise FileNotFoundError("No supported browsers found!")
 
     def close_existing_browsers(self):
         return call(['killall', '-9', 'chrome'], stdout=DEVNULL, stderr=DEVNULL)
