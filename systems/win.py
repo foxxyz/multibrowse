@@ -16,8 +16,15 @@ class System(BaseSystem):
 
     @property
     def browser_path(self):
-        return os.path.join('C:\\', 'Program Files (x86)', 'Google', 'Chrome', 'Application', 'chrome.exe')
+        dirs = ['Program Files (x86)', 'Program Files']
+        paths = [os.path.join('C:\\', dir, 'Google', 'Chrome', 'Application', 'chrome.exe') for dir in dirs]
+        for path in paths:
+            if os.path.isfile(path):
+                return path
 
+        # For consistant failure behaivor with respect to previous versions
+        return paths[0]
+        
     @property
     @lru_cache()
     def displays(self):
