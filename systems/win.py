@@ -22,9 +22,9 @@ class System(BaseSystem):
             if os.path.isfile(path):
                 return path
 
-        # For consistant failure behaivor with respect to previous versions
+        # For consistent failure behavior with respect to previous versions
         return paths[0]
-        
+
     @property
     @lru_cache()
     def displays(self):
