@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>multibrowse</id>
+    <version>2.1.0</version>
+    <title>multibrowse</title>
+    <authors>Ivo Janssen</authors>
+    <packageSourceUrl>https://github.com/foxxyz/multibrowse/tree/master/packages/chocolatey/multibrowse</packageSourceUrl>
+    <projectUrl>https://github.com/foxxyz/multibrowse</projectUrl>
+    <licenseUrl>https://github.com/foxxyz/multibrowse/blob/master/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectSourceUrl>https://github.com/foxxyz/multibrowse</projectSourceUrl>
+    <docsUrl>https://github.com/foxxyz/multibrowse</docsUrl>
+    <bugTrackerUrl>https://github.com/foxxyz/multibrowse/issues</bugTrackerUrl>
+    <tags>multibrowse multi-monitor browser kiosk</tags>
+    <summary>Multi-monitor Kiosk-mode Browser Launcher</summary>
+    <description><![CDATA[Multibrowse is a CLI launcher for Google Chrome that makes it trivial to open full-screen windows onto multiple monitors.
+
+## Package Parameters
+* `/installLocation` - Install to a different destination folder. Default: `$Env:ChocolateyToolsLocation\multibrowse`
+Example: `choco install multibrowse --params '"/installLocation:C:\opt\multibrowse"'`
+
+]]></description>
+    <releaseNotes>https://github.com/foxxyz/multibrowse/releases</releaseNotes>
+    <copyright>© Ivo Janssen</copyright>
+    <dependencies>
+      <dependency id="GoogleChrome" version="94.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="tools\**" target="tools" />
+  </files>
+</package>
