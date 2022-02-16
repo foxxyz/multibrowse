@@ -5,6 +5,7 @@
     <version>2.1.0</version>
     <title>multibrowse</title>
     <authors>Ivo Janssen</authors>
+    <owners>foxxyz</owners>
     <packageSourceUrl>https://github.com/foxxyz/multibrowse/tree/master/packages/chocolatey/multibrowse</packageSourceUrl>
     <projectUrl>https://github.com/foxxyz/multibrowse</projectUrl>
     <licenseUrl>https://github.com/foxxyz/multibrowse/blob/master/LICENSE</licenseUrl>
