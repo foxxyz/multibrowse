@@ -7,6 +7,21 @@ Browser is currently set to Google Chrome, but can be adapted to use any browser
 
 Supported platforms: Windows(7/8/10)/Linux/MacOS
 
+Installation
+------------
+
+Installing with a package manager is recommended.
+
+### Chocolatey
+
+```
+choco install multibrowse
+```
+
+### Manual
+
+Binaries can be found on the [releases page](https://github.com/foxxyz/multibrowse/releases). To build yourself, see below.
+
 Usage
 -----
 
@@ -34,10 +49,6 @@ Displays are ordered according to their x/y position from left to right, then to
 
 Additional CLI options passed to the `multibrowse` binary will be delegated to the browser instance. Check out the [wiki page](https://github.com/foxxyz/multibrowse/wiki) for common options.
 
-Installation
-------------
-
-Binaries can be found on the [releases page](https://github.com/foxxyz/multibrowse/releases). To build yourself, see below.
 
 Development Requirements
 ------------------------
