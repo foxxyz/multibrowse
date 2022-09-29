@@ -31,6 +31,7 @@ class BaseSystem(metaclass=ABCMeta):
             self.browser_path,
             '--no-first-run',
             '--disable-pinch',
+            '--password-store=basic',
             '--user-data-dir={}'.format(user_dir),
             '--window-size={},{}'.format(display['width'], display['height']),
             '--window-position={},{}'.format(display['x'], display['y']),
