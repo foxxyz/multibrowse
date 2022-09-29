@@ -3,7 +3,7 @@ from operator import itemgetter
 import os
 import sys
 
-__version__ = '2.1.0'
+__version__ = '2.1.1'
 
 # Conditionally import correct system
 if sys.platform.startswith('linux'):
