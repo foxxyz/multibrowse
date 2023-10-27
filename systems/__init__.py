@@ -29,13 +29,22 @@ class BaseSystem(metaclass=ABCMeta):
 
         args = [
             self.browser_path,
+            # Disable "what's new" and "welcome" modals
             '--no-first-run',
+            # Disable native pinch gestures
             '--disable-pinch',
+            # Use basic password store so keyring access is not necessary
             '--password-store=basic',
+            # Create a new profile so instances are not opened in the same window
             '--user-data-dir={}'.format(user_dir),
+            # Spawn in correct location
             '--window-size={},{}'.format(display['width'], display['height']),
             '--window-position={},{}'.format(display['x'], display['y']),
+            # Full-screen with no access to windowed mode or dev tools
             '--kiosk',
+            # Prevent "Chrome is outdated" pop-up
+            '--simulate-outdated-no-au="01 Jan 2199"',
+            # Use application mode
             '--app={}'.format(url),
         ] + flags
         Popen(args, stdout=DEVNULL, stderr=DEVNULL)
