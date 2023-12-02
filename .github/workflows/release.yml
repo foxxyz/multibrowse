@@ -1,0 +1,43 @@
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  release:
+    name: Release - ${{ matrix.platform.release_for }}
+    strategy:
+      matrix:
+        platform:
+          - release_for: Linux-x86_64
+            os: ubuntu-22.04
+            target: x86_64-unknown-linux-gnu
+            bin: multibrowse-${{ github.ref_name }}-ubuntu-22.04
+            name: multibrowse-${{ github.ref_name}}-ubuntu-22.04.tar.gz
+            command: build
+
+          - release_for: Windows-x86_64
+            os: windows-latest
+            target: x86_64-pc-windows-msvc
+            bin:  multibrowse-${{ github.ref_name }}-win11.exe
+            name: multibrowse-${{ github.ref_name}}-win11.zip
+            command: build
+
+          - release_for: macOS-x86_64
+            os: macOS-latest
+            target: aarch64-apple-darwin
+            bin: multibrowse-${{ github.ref_name }}-macos
+            name: multibrowse-${{ github.ref_name}}-macos.tar.gz
+            command: build
+
+    runs-on: ${{ matrix.platform.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Build binary
+        uses: houseabsolute/actions-rust-cross@v0
+        with:
+          command: ${{ matrix.platform.command }}
+          target: ${{ matrix.platform.target }}
+          args: "--locked --release"
+          strip: true
