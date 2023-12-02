@@ -4,6 +4,8 @@ use subprocess::{Exec, NullFile};
 use std::path::Path;
 use std::process;
 
+const VERSION: &str = env!("CARGO_PKG_VERSION");
+
 mod shared {
     #[derive(Debug)]
     pub struct Screen {
@@ -60,7 +62,7 @@ fn open_browser(url: &str, screen: &Screen, flags: &Vec<String>) {
 }
 
 fn main() {
-    println!("Multibrowse v3.0");
+    println!("Multibrowse v{}", VERSION);
     let args: Vec<String> = env::args().collect();
 
     // Not enough args, exit with help message
