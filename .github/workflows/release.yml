@@ -11,23 +11,26 @@ jobs:
         platform:
           - release_for: Linux-x86_64
             os: ubuntu-22.04
+            os_name: ubuntu-22.04
             target: x86_64-unknown-linux-gnu
-            bin: multibrowse-${{ github.ref_name }}-ubuntu-22.04
-            name: multibrowse-${{ github.ref_name}}-ubuntu-22.04.tar.gz
+            bin: multibrowse
+            name: multibrowse-${{ github.ref_name}}-ubuntu-22.04
             command: build
 
           - release_for: Windows-x86_64
             os: windows-latest
+            os_name: win11
             target: x86_64-pc-windows-msvc
-            bin:  multibrowse-${{ github.ref_name }}-win11.exe
-            name: multibrowse-${{ github.ref_name}}-win11.zip
+            bin: multibrowse.exe
+            name: multibrowse-${{ github.ref_name }}-win11.exe
             command: build
 
           - release_for: macOS-x86_64
             os: macOS-latest
+            os_name: macos
             target: aarch64-apple-darwin
-            bin: multibrowse-${{ github.ref_name }}-macos
-            name: multibrowse-${{ github.ref_name}}-macos.tar.gz
+            bin: multibrowse
+            name: multibrowse-${{ github.ref_name}}-macos-arm64
             command: build
 
     runs-on: ${{ matrix.platform.os }}
@@ -41,3 +44,16 @@ jobs:
           target: ${{ matrix.platform.target }}
           args: "--locked --release"
           strip: true
+      - name: Move binaries
+        shell: bash
+        run: mv target/${{ matrix.platform.target }}/release/${{ matrix.platform.bin }} ${{ matrix.platform.name }}
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: multibrowse-${{ github.ref_name }}-${{ matrix.platform.os_name }}
+          path: "multibrowse-*"
+      - name: Publish release
+        uses: softprops/action-gh-release@v1
+        with:
+          draft: true
+          files: "multibrowse-*"
