@@ -1,6 +1,2 @@
 .DS_Store
-build
-dist
-*.spec
-*.nupkg
-__pycache__
+target
