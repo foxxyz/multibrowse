@@ -18,9 +18,17 @@ Installing with a package manager is recommended.
 choco install multibrowse
 ```
 
-### Manual
+### Manual Installation
 
 Binaries can be found on the [releases page](https://github.com/foxxyz/multibrowse/releases). To build yourself, see below.
+
+### Additional Requirements (Linux)
+
+On linux, `xrandr` is used to find display configuration and must be available on `PATH`.
+
+To install:
+  * Install with Apt: `apt install lxrandr`
+  * Install with Pacman: `pacman -S xorg-xrandr`
 
 Usage
 -----
@@ -50,33 +58,21 @@ Displays are ordered according to their x/y position from left to right, then to
 Additional CLI options passed to the `multibrowse` binary will be delegated to the browser instance. Check out the [wiki page](https://github.com/foxxyz/multibrowse/wiki) for common options.
 
 
-Development Requirements
-------------------------
+Development
+-----------
 
- * Python 3
+### Requirements
 
-### Linux
+ * Rust
 
- * `xrandr`
-  * Install with Apt: `apt-get install lxrandr`
-  * Install with Pacman: `pacman -S xorg-xrandr`
+### Running
 
-### MacOS
-
- * PyObjC
-  * Install with pip: `pip install pyobjc`
-
+`cargo run`
 
 Building
 --------
 
-Multibrowse can be built into a single contained .exe file using [pyinstaller](http://www.pyinstaller.org/). Pyinstaller can be installed using `pip install pyinstaller`.
-
-The following command produces a single self-contained exe file in `/dist`:
-
-```
-pyinstaller --onefile multibrowse.py
-```
+`cargo build --release`
 
 License
 -------
