@@ -28,8 +28,8 @@ fn open_browser(url: &str, screen: &Screen, flags: &Vec<String>) {
 
     // If user data dir already exists, remove it to bust cache and prevent session restore bubble from appearing
     _ = remove_dir_all(&user_dir);
-    
-    // Browser path
+
+    // Set up browser creation
     Exec::cmd(Path::new(&platform::browser_path()))
         // Disable "what's new" and "welcome" modals
         .arg("--no-first-run")
@@ -48,6 +48,9 @@ fn open_browser(url: &str, screen: &Screen, flags: &Vec<String>) {
         .arg("--simulate-outdated-no-au=\"01 Jan 2199\"")
         // Use application mode
         .arg(format!("--app={url}"))
+        // Add additional user flags
+        .args(flags)
+        // Execute
         .stdout(NullFile)
         .stderr(NullFile)
         .detached()
