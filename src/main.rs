@@ -17,6 +17,7 @@ mod shared {
 
 #[cfg_attr(target_os = "macos", path = "platforms/macos.rs")]
 #[cfg_attr(target_os = "linux", path = "platforms/linux.rs")]
+#[cfg_attr(target_os = "windows", path = "platforms/windows.rs")]
 mod platform;
 
 use crate::shared::Screen;
