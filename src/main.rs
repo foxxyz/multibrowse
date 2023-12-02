@@ -86,7 +86,10 @@ fn main() {
             continue
         }
         println!("Opening {} on display {}", url, idx + 1);
-        open_browser(url, &screens[idx], &flags);
+        match &screens.get(idx) {
+            Some(s) => open_browser(url, s, &flags),
+            None => println!("Error: No display number {}", idx + 1)
+        }
     }
 
 }
