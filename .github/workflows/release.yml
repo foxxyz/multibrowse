@@ -54,7 +54,7 @@ jobs:
           if [[ "${{ matrix.platform.os }}" == "windows-latest" ]]; then
             7z a ../../../${{ matrix.platform.archive }} ${{ matrix.platform.bin }}
           else
-            chmod a+x ${{ matrix.platform.name }}
+            chmod a+x ${{ matrix.platform.bin }}
             tar czvf ../../../${{ matrix.platform.archive }} ${{ matrix.platform.bin }}
           fi
           mv ${{ matrix.platform.bin }} ../../../${{ matrix.platform.name }}
