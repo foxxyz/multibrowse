@@ -46,7 +46,9 @@ jobs:
           strip: true
       - name: Move binaries
         shell: bash
-        run: mv target/${{ matrix.platform.target }}/release/${{ matrix.platform.bin }} ${{ matrix.platform.name }}
+        run: |
+          mv target/${{ matrix.platform.target }}/release/${{ matrix.platform.bin }} ${{ matrix.platform.name }}
+          chmod a+x ${{ matrix.platform.name }}
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
