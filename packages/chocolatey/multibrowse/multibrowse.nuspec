@@ -2,8 +2,8 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>multibrowse</id>
-    <version>2.1.0</version>
-    <title>multibrowse</title>
+    <version>3.0.0</version>
+    <title>Multibrowse: Multi-Monitor Kiosk Browser Launcher</title>
     <authors>Ivo Janssen</authors>
     <owners>foxxyz</owners>
     <packageSourceUrl>https://github.com/foxxyz/multibrowse/tree/master/packages/chocolatey/multibrowse</packageSourceUrl>
@@ -20,12 +20,6 @@
 ## Package Parameters
 * `/installLocation` - Install to a different destination folder. Default: `$Env:ChocolateyToolsLocation\multibrowse`
 Example: `choco install multibrowse --params '"/installLocation:C:\opt\multibrowse"'`
-
-## Notes on Virus Scanners
-
-This package is built using [pyinstaller](https://github.com/pyinstaller/pyinstaller), which has a [known issue](https://github.com/pyinstaller/pyinstaller/issues/5854) regarding [triggering false positives](https://github.com/pyinstaller/pyinstaller/blob/develop/.github/ISSUE_TEMPLATE/antivirus.md#how-do-we-know-that-our-compiler-chain-and-therefore-the-bootloaders-really-arent-infected) on many AV detectors. In short: Malware author also frequently use pyinstaller, so machine learning training sets now seem to mark many pyinstaller bundles as malware.
-
-In case of doubt, [build the binary from source](https://github.com/foxxyz/multibrowse#building) and compare the hashes to verify.
 
 ]]></description>
     <releaseNotes>https://github.com/foxxyz/multibrowse/releases</releaseNotes>

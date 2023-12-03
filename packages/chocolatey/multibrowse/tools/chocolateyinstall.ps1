@@ -2,22 +2,22 @@
 
 $pp = Get-PackageParameters
 
-$url        = 'https://github.com/foxxyz/multibrowse/releases/download/v2.1.0/multibrowse-2.1.0-win10.zip'
+$url        = 'https://github.com/foxxyz/multibrowse/releases/download/v3.0.0/multibrowse-v3.0.0-win11.zip'
 
 $packageArgs = @{
   packageName   = $env:ChocolateyPackageName
-  unzipLocation = if ($pp.installLocation) { $pp.installLocation } else { Get-ToolsLocation }
+  unzipLocation = if ($pp.installLocation) { $pp.installLocation } else { "$(Get-ToolsLocation)\multibrowse" }
   url           = $url
-  checksum      = '27BD15B39A8802063DA19E7CC6AF1794D31793B4B172D198523EC01A5CD165D3'
+  checksum      = '5f305be82bdfc9022e59f03a00d65f16a458942a9cf3872d209e283a89be4c95'
   checksumType  = 'sha256'
 }
 
 Install-ChocolateyZipPackage @packageArgs
-Install-ChocolateyPath "$($packageArgs.unzipLocation)\multibrowse"
+Install-ChocolateyPath $packageArgs.unzipLocation
 
 # Save the install location for uninstalling
 $config = @{
-  destination = "$($packageArgs.unzipLocation)\multibrowse"
+  destination = $packageArgs.unzipLocation
 }
 
 $configFile = Join-Path $env:chocolateyPackageFolder 'config.xml'
