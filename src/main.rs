@@ -81,7 +81,11 @@ fn main() {
         }
     }
 
-    let screens: Vec<Screen> = platform::displays();
+    let mut screens: Vec<Screen> = platform::displays();
+
+    // Order screens by x, then y
+    screens.sort_unstable_by_key(|s| (s.y, s.x));
+
     for (idx, url) in urls.iter().enumerate() {
         if url == "-" {
             println!("Skipping display {}", idx + 1);
