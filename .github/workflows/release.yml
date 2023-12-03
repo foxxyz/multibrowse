@@ -59,6 +59,8 @@ jobs:
           fi
           mv ${{ matrix.platform.bin }} ../../../${{ matrix.platform.name }}
           cd -
+      - name: Generate SHA-256
+        run: shasum -a 256 ${{ matrix.platform.archive }}
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
