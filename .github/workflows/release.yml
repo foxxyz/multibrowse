@@ -15,6 +15,7 @@ jobs:
             target: x86_64-unknown-linux-gnu
             bin: multibrowse
             name: multibrowse-${{ github.ref_name}}-ubuntu-22.04
+            archive: multibrowse-${{ github.ref_name}}-ubuntu-22.04.tar.gz
             command: build
 
           - release_for: Windows-x86_64
@@ -23,6 +24,7 @@ jobs:
             target: x86_64-pc-windows-msvc
             bin: multibrowse.exe
             name: multibrowse-${{ github.ref_name }}-win11.exe
+            archive: multibrowse-${{ github.ref_name}}-win11.zip
             command: build
 
           - release_for: macOS-x86_64
@@ -31,6 +33,7 @@ jobs:
             target: aarch64-apple-darwin
             bin: multibrowse
             name: multibrowse-${{ github.ref_name}}-macos-arm64
+            archive: multibrowse-${{ github.ref_name}}-macos-arm64.tar.gz
             command: build
 
     runs-on: ${{ matrix.platform.os }}
@@ -47,8 +50,15 @@ jobs:
       - name: Move binaries
         shell: bash
         run: |
-          mv target/${{ matrix.platform.target }}/release/${{ matrix.platform.bin }} ${{ matrix.platform.name }}
-          chmod a+x ${{ matrix.platform.name }}
+          cd target/${{ matrix.platform.target }}/release
+          if [[ "${{ matrix.platform.os }}" == "windows-latest" ]]; then
+            7z a ../../../${{ matrix.platform.archive }} ${{ matrix.platform.bin }}
+          else
+            chmod a+x ${{ matrix.platform.name }}
+            tar czvf ../../../${{ matrix.platform.archive }} ${{ matrix.platform.bin }}
+          fi
+          mv ${{ matrix.platform.bin }} ../../../${{ matrix.platform.name }}
+          cd -
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
