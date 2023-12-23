@@ -25,7 +25,7 @@ Example: `choco install multibrowse --params '"/installLocation:C:\opt\multibrow
     <releaseNotes>https://github.com/foxxyz/multibrowse/releases</releaseNotes>
     <copyright>© Ivo Janssen</copyright>
     <dependencies>
-      <dependency id="GoogleChrome" version="94.0" />
+      <dependency id="GoogleChrome" version="120.0.6099.109" />
     </dependencies>
   </metadata>
   <files>
