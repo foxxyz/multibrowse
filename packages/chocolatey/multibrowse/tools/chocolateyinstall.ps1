@@ -20,5 +20,5 @@ $config = @{
   destination = $packageArgs.unzipLocation
 }
 
-$configFile = Join-Path $env:chocolateyPackageFolder 'config.xml'
+$configFile = Join-Path (Get-ChocolateyPath -PathType 'PackagePath') 'config.xml'
 Export-Clixml -Path $configFile -InputObject $config

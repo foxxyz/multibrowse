@@ -1,4 +1,4 @@
-$configFile = Join-Path $env:chocolateyPackageFolder 'config.xml'
+$configFile = Join-Path (Get-ChocolateyPath -PathType 'PackagePath') 'config.xml'
 $config = Import-CliXml $configFile
 
 Remove-Item $config.destination -Recurse -Force
