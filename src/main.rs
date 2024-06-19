@@ -50,7 +50,9 @@ fn open_browser(url: &str, screen: &Screen, flags: &Vec<String>) {
         // Prevent "Chrome is outdated" pop-up
         .arg("--simulate-outdated-no-au=\"01 Jan 2199\"")
         // Use application mode
-        .arg(format!("--app={url}"))
+        //.arg(format!("--app={url}"))
+        // Page to open
+        .arg(url)
         // Add additional user flags
         .args(flags)
         // Execute
