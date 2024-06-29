@@ -2,9 +2,12 @@ use std::io::Error;
 use std::mem;
 use std::ptr;
 use std::path::PathBuf;
-use winapi::shared::minwindef::{LPARAM, TRUE, BOOL};
-use winapi::shared::windef::{HMONITOR, HDC, LPRECT, RECT};
-use winapi::um::winuser::{EnumDisplayMonitors, GetMonitorInfoW, MONITORINFOEXW};
+use windows::{
+    Win32::{
+        Foundation::{BOOL, LPARAM, RECT, TRUE},
+        Graphics::Gdi::{EnumDisplayMonitors, GetMonitorInfoW, HDC, HMONITOR, MONITORINFO, MONITORINFOEXW},
+    }
+};
 use crate::shared::Screen;
 
 const SEARCH_DIRECTORIES: [&str; 2] = [
@@ -44,43 +47,53 @@ impl Rectangle for RECT {
     }
 }
 
-unsafe extern "system" fn monitor_callback(monitor: HMONITOR, _: HDC, _: LPRECT, results: LPARAM) -> BOOL {
-    // Place to store results
-    let monitors: &mut Vec<MONITORINFOEXW> = mem::transmute(results);
-    // Place to store monitor info
-    let mut monitor_info: MONITORINFOEXW = mem::zeroed();
-    monitor_info.cbSize = mem::size_of::<MONITORINFOEXW>() as u32;
-    let monitor_info_ptr = <*mut _>::cast(&mut monitor_info);
-    // "W" indicates Unicode version, "A" indicates ANSI version
-    let result = GetMonitorInfoW(monitor, monitor_info_ptr);
-    if result == TRUE {
-        monitors.push(monitor_info);
+unsafe extern "system" fn monitor_callback(monitor: HMONITOR, _: HDC, _: *mut RECT, vec: LPARAM) -> BOOL {
+   let monitors = &mut *(vec.0 as *mut Vec<HMONITOR>);
+   monitors.push(monitor);
+   TRUE
+}
+
+pub fn monitor_info(id: u8, monitor: HMONITOR) -> Screen {
+    let mut wrapper = MONITORINFOEXW {
+        monitorInfo: MONITORINFO {
+            cbSize: u32::try_from(mem::size_of::<MONITORINFOEXW>()).unwrap(),
+            rcMonitor: RECT::default(),
+            rcWork: RECT::default(),
+            dwFlags: 0,
+        },
+        szDevice: [0; 32],
+    };
+    if unsafe {
+       !GetMonitorInfoW(monitor, std::ptr::addr_of_mut!(wrapper).cast()).as_bool()
+    } {
+        panic!("Unable to get monitor info: {}", Error::last_os_error());
     }
-    TRUE
+
+    Screen {
+        id: id,
+        width: wrapper.monitorInfo.rcMonitor.width(),
+        height: wrapper.monitorInfo.rcMonitor.height(),
+        x: wrapper.monitorInfo.rcMonitor.x(),
+        y: wrapper.monitorInfo.rcMonitor.y(),
+    }
 }
 
 pub fn displays() -> Vec<Screen> {
     let mut connected : Vec<Screen> = Vec::new();
 
-    let mut monitors = Vec::<MONITORINFOEXW>::new();
-    let results = &mut monitors as *mut _;
+    let mut monitors = Vec::<HMONITOR>::new();
 
     let result = unsafe {
-        EnumDisplayMonitors(ptr::null_mut(), ptr::null(), Some(monitor_callback), results as LPARAM)
+	 EnumDisplayMonitors(None, None, Some(monitor_callback), LPARAM(ptr::addr_of_mut!(monitors) as isize)).as_bool()
     };
     
-    if result != TRUE {
+    if !result {
         panic!("Unable to get monitor info: {}", Error::last_os_error());
     }
 
-    for (id, screen) in monitors.iter().enumerate() {
-        connected.push(Screen {
-            id: id as u8,
-            width: screen.rcMonitor.width(),
-            height: screen.rcMonitor.height(),
-            x: screen.rcMonitor.x(),
-            y: screen.rcMonitor.y()
-        })
+    for (id, monitor) in monitors.iter().enumerate() {
+        let screen = monitor_info(id as u8, *monitor);
+        connected.push(screen);
     }
 
     connected

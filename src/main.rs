@@ -38,9 +38,9 @@ fn open_browser(url: &str, screen: &Screen, flags: &Vec<String>) {
         .arg("--no-first-run")
         // Disable native pinch gestures
         .arg("--disable-pinch")
-        //Use basic password store so keyring access is not necessary
+        // Use basic password store so keyring access is not necessary
         .arg("--password-store=basic")
-        //Create a new profile so instances are not opened in the same window
+        // Create a new profile so instances are not opened in the same window
         .arg(format!("--user-data-dir={}", user_dir.display()))
         // Spawn in correct location
         .arg(format!("--window-size={},{}", screen.width, screen.height))
@@ -49,8 +49,6 @@ fn open_browser(url: &str, screen: &Screen, flags: &Vec<String>) {
         .arg("--kiosk")
         // Prevent "Chrome is outdated" pop-up
         .arg("--simulate-outdated-no-au=\"01 Jan 2199\"")
-        // Use application mode
-        //.arg(format!("--app={url}"))
         // Page to open
         .arg(url)
         // Add additional user flags
