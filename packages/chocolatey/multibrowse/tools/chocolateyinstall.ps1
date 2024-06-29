@@ -2,13 +2,13 @@
 
 $pp = Get-PackageParameters
 
-$url        = 'https://github.com/foxxyz/multibrowse/releases/download/v3.0.0/multibrowse-v3.0.0-win11.zip'
+$url        = 'https://github.com/foxxyz/multibrowse/releases/download/v3.0.2/multibrowse-v3.0.2-win11.zip'
 
 $packageArgs = @{
   packageName   = $env:ChocolateyPackageName
   unzipLocation = if ($pp.installLocation) { $pp.installLocation } else { "$(Get-ToolsLocation)\multibrowse" }
   url           = $url
-  checksum      = '5f305be82bdfc9022e59f03a00d65f16a458942a9cf3872d209e283a89be4c95'
+  checksum      = 'db1e956b53e5080dd7acf68c4bb094313ce9870d4f3e707c3a61f60fc3001187'
   checksumType  = 'sha256'
 }
 
